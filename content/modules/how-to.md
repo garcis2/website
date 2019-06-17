@@ -57,3 +57,47 @@ Once you're done with your notebook, you can export it to html to contribute it 
 ```
 jupyter nbconvert --to html --template basic [your notebook's title].ipynb
 ```
+
+### Creating a Book
+---
+
+If you have a collection of notebooks you want to share with students, you can create a Jupyter Book that organizes them all in a single hub and narrative structure. To do so, first install the Book CLI using the jupyter command line. Specifically, run the following command:
+
+```
+pip install jupyter-book
+```
+
+Then create your book by navigating to the directory you would like to create your book in and using the following line (replacing "yourbookname" with whatever you would like to name the book):
+
+```
+jupyter-book build yourbookname
+```
+
+Once made, you will see that the book generates many different folders and files. The main components to be concerned about are the `content` folder and the files named `_config.yml` and `/_data/toc.yml`. `Content` is where you put all of notebooks you create, and then `toc.yml` is the table of contents, which needs to be updated once all of the desired content is in the folder. For example, the following table of contents is for a book chapter called "Features":
+
+```
+- title: Features
+  url: /features/features
+  not_numbered: true
+  expand_sections: true
+  sections:
+  - title: Markdown files
+    url: /features/markdown
+    not_numbered: true
+  - title: Jupyter notebooks
+    url: /features/notebooks
+    not_numbered: true
+```
+
+The file `_config.yml` is for customizing different aspects of your book, such as the title, logo, interactive buttons. Lastly, since notebooks are built using different environments, you may want to specify the packages required to run your book. To do so, update the `requirements.txt` file in the main directory. For more details and customization options, visit the [Jupyter book guide.](https://jupyter.org/jupyter-book/guide/01_overview.html)
+
+Once all of the content is in place and everything is configured, you can create the Markdown in your book by running the following command:
+
+```
+jupyter-book build yourbookname/
+```
+
+which will take the chapters you outlined in the `toc.yml` file and automatically organize the notebooks for you. From there, you can ultimately build the html for your book, which will prepare it for the web, through one of two ways:
+
+1. **Build your site on Github** by simply opening the directory you created your book as a repository and then telling Github to build a site from your repository.
+2. **Build your site locally** so that you can preview the results before pushing it online. Doing this however will require a third-party application (namely: Docker, Singularity, or Ruby). 
